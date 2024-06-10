@@ -161,6 +161,6 @@ class Ball {
   }
 }
 
-const balls = new Ball(300);
+const balls = new Ball(250);
 balls.draw();
 balls.move();
