@@ -49,7 +49,7 @@ class Ball {
   constructor(numOfBall) {
     this.numOfBall = numOfBall;
     this.balls = [];
-    this.move = this.move.bind(this); 
+    this.move = this.move.bind(this);
   }
 
   draw() {
@@ -97,18 +97,18 @@ class Ball {
         ball.posX = MAX_X_BOUNDARY - ball.ballSize;
         ball.dx *= -1;
       } else if (ball.posX < 0) {
-        ball.posX = 0; 
+        ball.posX = 0;
         ball.dx *= -1;
       }
 
       if (ball.posY >= (MAX_Y_BOUNDARY - ball.ballSize)) {
-        ball.posY = MAX_Y_BOUNDARY - ball.ballSize; 
+        ball.posY = MAX_Y_BOUNDARY - ball.ballSize;
         ball.dy *= -1;
       } else if (ball.posY < 0) {
         ball.posY = 0;
         ball.dy *= -1;
       }
-      
+
       // setting new position
       ball.circle.style.left = `${ball.posX}px`;
       ball.circle.style.top = `${ball.posY}px`;
@@ -118,48 +118,49 @@ class Ball {
     requestAnimationFrame(this.move);
   }
 
-  collision(){
-      // Check for collisions with other balls
-      for (let i = 0; i < this.balls.length; i++) {
-        for (let j = i + 1; j < this.balls.length; j++) {
-          const distX = this.balls[i].posX + this.balls[i].ballSize / 2 - (this.balls[j].posX + this.balls[j].ballSize / 2);
-          const distY = this.balls[i].posY + this.balls[i].ballSize / 2 - (this.balls[j].posY + this.balls[j].ballSize / 2);
-          
-          const distance = Math.ceil(Math.sqrt(distX * distX + distY * distY));
-          if (distance  <= (this.balls[i].ballSize / 2 + this.balls[j].ballSize / 2)) {          
-           
-            const overlap = (this.balls[i].ballSize / 2 + this.balls[j].ballSize / 2) - distance;
-            const correctionX = (distX / distance) * overlap / 2;
-            const correctionY = (distY / distance) * overlap / 2;
-            
-            //adjusting overlapping
-            this.balls[i].posX += correctionX;
-            this.balls[i].posY += correctionY;
-            this.balls[j].posX -= correctionX;
-            this.balls[j].posY -= correctionY;
-            
-            const angle = Math.atan2(distY, distX);
-            
-            //initial velocity along line of collision
-            const u1 = this.balls[i].dx * Math.cos(angle) + this.balls[i].dy * Math.sin(angle);
-            const u2 = this.balls[j].dx * Math.cos(angle) + this.balls[j].dy * Math.sin(angle);
-            
-            
-            const v1 = this.balls[i].dy * Math.cos(angle) - this.balls[i].dx * Math.sin(angle);
-            const v2 = this.balls[j].dy * Math.cos(angle) - this.balls[j].dx * Math.sin(angle);
-            
-            //final velocity along perpendicular to the line of collision
-            this.balls[i].dx = u2 * Math.cos(angle) - v1 * Math.sin(angle);
-            this.balls[i].dy = u2 * Math.sin(angle) + v1 * Math.cos(angle);
-            this.balls[j].dx = u1 * Math.cos(angle) - v2 * Math.sin(angle);
-            this.balls[j].dy = u1 * Math.sin(angle) + v2 * Math.cos(angle);
-            
-          }
+  collision() {
+    // Check for collisions with other balls
+    for (let i = 0; i < this.balls.length; i++) {
+      for (let j = i + 1; j < this.balls.length; j++) {
+
+        const distX = this.balls[i].posX + this.balls[i].ballSize / 2 - (this.balls[j].posX + this.balls[j].ballSize / 2);
+        const distY = this.balls[i].posY + this.balls[i].ballSize / 2 - (this.balls[j].posY + this.balls[j].ballSize / 2);
+
+        const distance = Math.ceil(Math.sqrt(distX * distX + distY * distY));
+        if (distance <= (this.balls[i].ballSize / 2 + this.balls[j].ballSize / 2)) {
+
+          const overlap = (this.balls[i].ballSize / 2 + this.balls[j].ballSize / 2) - distance;
+          const correctionX = (distX / distance) * overlap / 2;
+          const correctionY = (distY / distance) * overlap / 2;
+
+          //adjusting overlapping
+          this.balls[i].posX += correctionX;
+          this.balls[i].posY += correctionY;
+          this.balls[j].posX -= correctionX;
+          this.balls[j].posY -= correctionY;
+
+          const angle = Math.atan2(distY, distX);
+
+          //initial velocity along line of collision
+          const u1 = this.balls[i].dx * Math.cos(angle) + this.balls[i].dy * Math.sin(angle);
+          const u2 = this.balls[j].dx * Math.cos(angle) + this.balls[j].dy * Math.sin(angle);
+
+
+          const v1 = this.balls[i].dy * Math.cos(angle) - this.balls[i].dx * Math.sin(angle);
+          const v2 = this.balls[j].dy * Math.cos(angle) - this.balls[j].dx * Math.sin(angle);
+
+          //final velocity along perpendicular to the line of collision
+          this.balls[i].dx = u2 * Math.cos(angle) - v1 * Math.sin(angle);
+          this.balls[i].dy = u2 * Math.sin(angle) + v1 * Math.cos(angle);
+          this.balls[j].dx = u1 * Math.cos(angle) - v2 * Math.sin(angle);
+          this.balls[j].dy = u1 * Math.sin(angle) + v2 * Math.cos(angle);
+
         }
       }
+    }
   }
 }
 
-const balls = new Ball(200);
+const balls = new Ball(300);
 balls.draw();
 balls.move();

@@ -1,5 +1,5 @@
-const MIN_BALL_SIZE = 15;
-const MAX_BALL_SIZE = 20;
+const MIN_BALL_SIZE = 20;
+const MAX_BALL_SIZE = 40;
 const MIN_X_BOUNDARY = 0;
 const MAX_X_BOUNDARY = 1800;
 const MIN_Y_BOUNDARY = 0;
